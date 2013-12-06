@@ -1,0 +1,35 @@
+\documentclass[11pt,a4paper,oneside,dutch]{article}
+\usepackage{a4wide}
+
+\usepackage[utf8]{inputenc}				% gebruik UTF karakters in source file
+\usepackage[dutch]{babel}				% taal: nederlands
+\usepackage{icomma}						% komma ipv. punt in reële getallen
+
+\usepackage{amsmath}					% wiskundige formules
+\usepackage{amssymb}					% wiskundige symbolen
+\usepackage{xfrac}						% inline breuken met commando sfrac{}{}
+\usepackage{siunitx}					% si-eenheden met commando \SI{}{}
+
+\usepackage{graphicx}					% gebruik figuren met \includegraphics commando
+\usepackage[font=small,labelfont=bf]{caption}	% caption een beetje mooier
+\usepackage{subcaption}					% subfiguren
+
+\renewcommand{\topfraction}{0.9}		%|
+\renewcommand{\bottomfraction}{0.8}		%| laat meer figuur op 1 pagina toe
+\renewcommand{\floatpagefraction}{0.7}	%|
+
+\author{Laurens Bogaert \and Thomas Deckmyn \and Seppe Lenders}
+\title{VLSI-technologie en ontwerp: Cadence design project}
+\date{\vspace{-5ex}} % hack om datum te verwijderen
+
+\begin{document}
+
+\maketitle{}
+
+\section{Schematic design}
+
+We berekenen eerst de frequentie waaraan ons schuifregister moet werken. Met een refresh rate van $\SI{500}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
+
+
+
+\end{document}
