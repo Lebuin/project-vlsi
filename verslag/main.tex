@@ -12,7 +12,7 @@
 
 \usepackage{graphicx}					% gebruik figuren met \includegraphics commando
 \usepackage[font=small,labelfont=bf]{caption}	% caption een beetje mooier
-\usepackage{subcaption}					% subfiguren
+\usepackage{subfigure}					% subfiguren
 
 \renewcommand{\topfraction}{0.9}		%|
 \renewcommand{\bottomfraction}{0.8}		%| laat meer figuur op 1 pagina toe
@@ -30,6 +30,59 @@
 
 We berekenen eerst de frequentie waaraan ons schuifregister moet werken. Met een refresh rate van $\SI{50}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
 
+We simuleren het 1-bit schuifregister bij deze frequentie. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in \ref{fig:wave_tussen2}.
 
+\begin{figure}[htp]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.7\textwidth]{wave_tussen1.png}
+		\label{fig:wave_tussen1}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.7\textwidth]{wave_tussen2.png}
+		\label{fig:wave_tussen2}
+	}
+	\caption{De werking van het 1-bit schuifregister voor twee verschillende ingangssignalen.}
+	\label{fig:wave_tussen}
+\end{figure}
+
+De gate capaciteiten van $T_6$ en $T_7$ vormen de lastcapaciteiten van de eerste trap van het schuifregister. Om een symmetrische werking te verkrijgen, zorgen we ervoor dat deze lastcapaciteit niet afhangt van het type overgang. We kiezen dus
+
+\begin{align*}
+C_P &= C_N \\
+\Leftrightarrow W_P L_P &= W_N L_N
+\end{align*}
+
+Bovendien willen we de factor $\frac{\sfrac{W_P}{L_P}}{\sfrac{W_N}{L_N}}$ gelijk houden aan $2,7$, zoals in de opgave. Wanneer we $W_P = L_N$ en $W_N = L_P$ gebruiken, is er nog een vrijheidsgraad die de tijdsconstante van het overgangsverschijnsel bepaalt. We kiezen als oplossing voor onze vergelijkingen:
+
+\begin{align*}
+W_N = L_P &= 1 \\
+W_P = L_N &= 1,65
+\end{align*}
+
+Door alle dimensies te vergroten met een factor $2$, is de invloed van een verandering op $V_{in}$ op $V_{tussen}$ kleiner. Het nadeel hiervan is dat de tijdsconstante van het overgangsverschijnsel groter wordt, maar dit is bij de gewenste frequentie geen probleem. De uiteindelijke parameters zijn:
+
+\begin{align*}
+W_N = L_P &= 2 \\
+W_P = L_N &= 3,3
+\end{align*}
+
+Figuur \ref{fig:wave_optimaal} toont de waveform van de 5-bit schakeling met deze waarden. Deze werkt nu zoals gewenst. Als maximale werkfrequentie vinden we ongeveer $\SI{125}{MHz}$. Om deze frequentie te bereiken, moet ervoor gezorgd worden dat de duty cycle van de kloksignalen voldoende dicht bij $50\%$ ligt.
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{wave_optimaal.png}
+	\caption{De werking van het 5-bit register na correctie van de breedte en lengte van de transistors.}
+	\label{fig:wave_optimaal}
+\end{figure}
+
+Als we de kloksignalen laten overlappen, huppelt het ingangssignaal te snel door de schakeling. Wanneer zowel $CLK_1$ als $CLK_2$ hoog is, kan het ingangssignaal van een schuifregister namelijk rechtstreeks doorstromen naar de uitgang. Figuur \ref{fig:wave_overlap} toont de waveform bij een duty cycle van $0,62$.
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{wave_overlap.png}
+	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen.}
+	\label{fig:wave_overlap}
+\end{figure}
 
 \end{document}
