@@ -30,7 +30,7 @@
 
 We berekenen eerst de frequentie waaraan ons schuifregister moet werken. Met een refresh rate van $\SI{50}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
 
-We simuleren het 1-bit schuifregister bij deze frequentie. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in \ref{fig:wave_tussen2}.
+We simuleren het 1-bit schuifregister zoals getoond in figuur \ref{fig:schakeling} bij deze frequentie. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in figuur \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in figuur \ref{fig:wave_tussen2}.
 
 \begin{figure}[htp]
 	\centering
@@ -81,7 +81,7 @@ Als we de kloksignalen laten overlappen, huppelt het ingangssignaal te snel door
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=0.7\textwidth]{wave_overlap.png}
-	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen.}
+	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen.} %TODO uitleg bij net22
 	\label{fig:wave_overlap}
 \end{figure}
 
