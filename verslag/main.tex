@@ -91,11 +91,22 @@ Als we de kloksignalen laten overlappen, huppelt het ingangssignaal te snel door
 
 Tijdens het tekenen van de layout van de invertor komen we één error tegen: de afstand tussen de poly en de naa mag niet groter zijn dan $2,2$. We verschuiven de gehele PMOS naar links om dit te verhelpen.
 
-Bij het dimensioneren van de transistors hebben we geen rekening gehouden met de DRC-regels. Een kanaalbreedte van $\SI{2}{\micro m}$ is niet realiseerbaar. We herdimensioneren naar
+Bij het dimensioneren van de transistors hebben we geen rekening gehouden met de DRC-regels. Een kanaalbreedte van $\SI{2}{\micro m}$ is hiermee niet realiseerbaar. We herdimensioneren naar
 
 \begin{align*}
 W_N = L_P &= \SI{2,2}{\micro m} \\
 W_P = L_N &= \SI{3,6}{\micro m}
 \end{align*}
+
+Bij het ontwerp van het elementaire deel van het schuifregister stuitten we op enkele problemen:
+
+\begin{itemize}
+\item We zijn er onterecht vanuit gegaan dat voor de metal2-laag dezelfde design regels zouden gelden als voor de metal1-layer. Dit bleek niet het geval: de minimale grootte en afstand zijn groter.
+\item De labels waren getekend in andere lagen dan de tekst-laag.
+\item Er stonden een aantal via's te dicht bij poly.
+\item Alle paa- en naa-gebieden grensden aan elkaar, ook als ze een verschillende potentiaal hadden.
+\end{itemize}
+
+Wanneer we deze fouten oplossen, blijft er nog een error over: de scheiding tussen de PMOS-componenten in de verschillende bitregisters is te klein. Als we de oriëntatie van de PMOS-componenten willen behouden, kunnen we dit probleem enkel verhelpen door de lengte van het PMOS-kanaal te verkleinen naar $\SI{3,1}{\micro m}$. Dit heeft natuurlijk een klein nadelig effect op de werking van de schakeling.
 
 \end{document}
