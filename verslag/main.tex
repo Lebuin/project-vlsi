@@ -30,7 +30,7 @@
 
 We berekenen eerst de frequentie waaraan ons schuifregister moet werken. Met een refresh rate van $\SI{50}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
 
-We simuleren het 1-bit schuifregister zoals getoond in figuur \ref{fig:schakeling} bij deze frequentie. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in figuur \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in figuur \ref{fig:wave_tussen2}.
+We simuleren het 1-bit schuifregister bij deze frequentie in Cadence. We noemen $V_{tussen}$ de spanning aan de uitgang van de eerst invertor. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in figuur \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in figuur \ref{fig:wave_tussen2}.
 
 \begin{figure}[htp]
 	\centering
@@ -42,7 +42,7 @@ We simuleren het 1-bit schuifregister zoals getoond in figuur \ref{fig:schakelin
 		\includegraphics[width=0.7\textwidth]{wave_tussen2.png}
 		\label{fig:wave_tussen2}
 	}
-	\caption{De werking van het 1-bit schuifregister voor twee verschillende ingangssignalen.}
+	\caption{De werking van het 1-bit schuifregister voor twee verschillende ingangssignalen. net26 is de spanning $V_{tussen}$.}
 	\label{fig:wave_tussen}
 \end{figure}
 
@@ -56,15 +56,15 @@ C_P &= C_N \\
 Bovendien willen we de factor $\frac{\sfrac{W_P}{L_P}}{\sfrac{W_N}{L_N}}$ gelijk houden aan $2,7$, zoals in de opgave. Wanneer we $W_P = L_N$ en $W_N = L_P$ gebruiken, is er nog een vrijheidsgraad die de tijdsconstante van het overgangsverschijnsel bepaalt. We kiezen als oplossing voor onze vergelijkingen:
 
 \begin{align*}
-W_N = L_P &= 1 \\
-W_P = L_N &= 1,65
+W_N = L_P &= \SI{1}{\micro m} \\
+W_P = L_N &= \SI{1,65}{\micro m}
 \end{align*}
 
 Door alle dimensies te vergroten met een factor $2$, is de invloed van een verandering op $V_{in}$ op $V_{tussen}$ kleiner. Het nadeel hiervan is dat de tijdsconstante van het overgangsverschijnsel groter wordt, maar dit is bij de gewenste frequentie geen probleem. De uiteindelijke parameters zijn:
 
 \begin{align*}
-W_N = L_P &= 2 \\
-W_P = L_N &= 3,3
+W_N = L_P &= \SI{2}{\micro m} \\
+W_P = L_N &= \SI{3,3}{\micro m}
 \end{align*}
 
 Figuur \ref{fig:wave_optimaal} toont de waveform van de 5-bit schakeling met deze waarden. Deze werkt nu zoals gewenst. Als maximale werkfrequentie vinden we ongeveer $\SI{125}{MHz}$. Om deze frequentie te bereiken, moet ervoor gezorgd worden dat de duty cycle van de kloksignalen voldoende dicht bij $50\%$ ligt.
@@ -81,8 +81,21 @@ Als we de kloksignalen laten overlappen, huppelt het ingangssignaal te snel door
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=0.7\textwidth]{wave_overlap.png}
-	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen.} %TODO uitleg bij net22
+	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen. net22 is de uitgangsspanning van het eerste schuifregister.}
 	\label{fig:wave_overlap}
 \end{figure}
+
+
+
+\section{Layout design}
+
+Tijdens het tekenen van de layout van de invertor komen we één error tegen: de afstand tussen de poly en de naa mag niet groter zijn dan $2,2$. We verschuiven de gehele PMOS naar links om dit te verhelpen.
+
+Bij het dimensioneren van de transistors hebben we geen rekening gehouden met de DRC-regels. Een kanaalbreedte van $\SI{2}{\micro m}$ is niet realiseerbaar. We herdimensioneren naar
+
+\begin{align*}
+W_N = L_P &= \SI{2,2}{\micro m} \\
+W_P = L_N &= \SI{3,6}{\micro m}
+\end{align*}
 
 \end{document}
