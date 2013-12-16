@@ -11,8 +11,8 @@
 \usepackage{siunitx}					% si-eenheden met commando \SI{}{}
 
 \usepackage{graphicx}					% gebruik figuren met \includegraphics commando
-\usepackage[font=small,labelfont=bf]{caption}	% caption een beetje mooier
-\usepackage{subfigure}					% subfiguren
+%\usepackage[font=small,labelfont=bf]{caption}	% caption een beetje mooier
+\usepackage{subcaption}					% subfiguren
 
 \renewcommand{\topfraction}{0.9}		%|
 \renewcommand{\bottomfraction}{0.8}		%| laat meer figuur op 1 pagina toe
@@ -34,14 +34,19 @@ We simuleren het 1-bit schuifregister bij deze frequentie in Cadence. We noemen 
 
 \begin{figure}[htp]
 	\centering
-	\subfigure[]{
-		\includegraphics[width=0.7\textwidth]{wave_tussen1.png}
+	\begin{subfigure}[b]{0.7\textwidth}
+		\includegraphics[width=\textwidth]{wave_tussen1.png}
+		\caption{}
 		\label{fig:wave_tussen1}
-	}
-	\subfigure[]{
-		\includegraphics[width=0.7\textwidth]{wave_tussen2.png}
+	\end{subfigure}
+	
+	\vspace{1em}	
+	
+	\begin{subfigure}[b]{0.7\textwidth}
+		\includegraphics[width=\textwidth]{wave_tussen2.png}
+		\caption{}
 		\label{fig:wave_tussen2}
-	}
+	\end{subfigure}
 	\caption{De werking van het 1-bit schuifregister voor twee verschillende ingangssignalen. net26 is de spanning $V_{tussen}$.}
 	\label{fig:wave_tussen}
 \end{figure}
@@ -108,5 +113,52 @@ Bij het ontwerp van het elementaire deel van het schuifregister stuitten we op e
 \end{itemize}
 
 Wanneer we deze fouten oplossen, blijft er nog een error over: de scheiding tussen de PMOS-componenten in de verschillende bitregisters is te klein. Als we de oriëntatie van de PMOS-componenten willen behouden, kunnen we dit probleem enkel verhelpen door de lengte van het PMOS-kanaal te verkleinen naar $\SI{3,1}{\micro m}$. Dit heeft natuurlijk een nadelig effect op de werking van de schakeling: de symmetrie in de afmetingen van de transistors is verdwenen.
+
+Het afgewerkte ontwerp van de elementaire schuifregister-cel is getekend in figuur \ref{fig:elementary}. Om de breedte van het ontwerp kleiner dan $\SI{20}{\micro m}$ te krijgen, moesten we alle transistors boven elkaar plaatsen. De twee trappen van het schuifregister werden gegroepeerd in respectievelijk de onder- en bovenkant. Zo is de lengte van de verticale verbindingen minimaal gehouden. Binnen elke trap werd dezelfde transistorgroepering gebruikt als in de schakeling in de opgave.
+
+Waar mogelijk werd zowel aan de boven- als onderzijde van de transistor een metaallaag voorzien ter afscherming van licht.
+
+\begin{figure}[htp]
+	\centering
+	\begin{subfigure}[b]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.397\textwidth]{elementary_frontend.png}
+		\caption{front end}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.4\textwidth]{elementary_backend.png}
+		\caption{back end}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.4\textwidth]{elementary_all.png}
+		\caption{alle lagen}
+	\end{subfigure}
+	
+	\caption{Het layout ontwerp van de elementaire SR-cel.}
+	\label{fig:elementary}
+\end{figure}
+
+Figuur \ref{fig:layout} toont het ontwerp van een bonding pad en het volledig afgewerkte ontwerp.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{bonding_pad.png}
+		\caption{}
+		\label{fig:bonding_pad}
+	\end{subfigure}
+	\qquad
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{10bit.png}
+		\caption{}
+		\label{fig:10bit}
+	\end{subfigure}
+	
+	\caption{De layout van (\subref{fig:bonding_pad}) de bonding pad en (\subref{fig:10bit}) het volledige 10-bit register.}
+	\label{fig:layout}
+\end{figure}
 
 \end{document}
