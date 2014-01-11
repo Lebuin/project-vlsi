@@ -28,9 +28,9 @@
 
 \section{Schematic design}
 
-We berekenen eerst de frequentie waaraan ons schuifregister moet werken. Met een refresh rate van $\SI{50}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
+We berekenen eerst de frequentie waarvoor ons schuifregister moet werken. Met een refresh rate van $\SI{50}{Hz}$ en $800 \cdot \SI{600}{pixels}$ is deze gelijk aan $50 \cdot 800 \cdot 600 = \SI{24}{MHz}$. Dit komt overeen met een periode van $\SI{41,67}{ns}$.
 
-We simuleren het 1-bit schuifregister bij deze frequentie in Cadence. We noemen $V_{tussen}$ de spanning aan de uitgang van de eerst invertor. Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in figuur \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in figuur \ref{fig:wave_tussen2}.
+We simuleren het 1-bit schuifregister bij deze frequentie in Cadence. We noemen $V_{tussen}$ de spanning achter de $1^{e}$ trap in een 1-bit schuifregister . Er treden problemen op bij volgende situatie: We leggen een hoog ingangssignaal aan, waardoor $V_{tussen}$ in de eerste klokfase laag wordt. Wanneer $V_{in}$ daalt tijdens de tweede klokfase, wordt $V_{tussen}$ ongedefinieerd ($\approx \SI{1,5}{V}$). Dit is weergegeven in figuur \ref{fig:wave_tussen1}. De omgekeerde transitie levert geen problemen op, zoals te zien in figuur \ref{fig:wave_tussen2}.
 
 \begin{figure}[htp]
 	\centering
@@ -65,7 +65,7 @@ W_N = L_P &= \SI{1}{\micro m} \\
 W_P = L_N &= \SI{1,65}{\micro m}
 \end{align*}
 
-Door alle dimensies te vergroten met een factor $2$, is de invloed van een verandering op $V_{in}$ op $V_{tussen}$ kleiner. Het nadeel hiervan is dat de tijdsconstante van het overgangsverschijnsel groter wordt, maar dit is bij de gewenste frequentie geen probleem. De uiteindelijke parameters zijn:
+Door alle dimensies te vergroten met een factor $2$, is de invloed van een transitie op $V_{in}$ op de waarde van $V_{tussen}$ kleiner. Het nadeel hiervan is dat de tijdsconstante van het overgangsverschijnsel groter wordt, maar dit is bij de gewenste frequentie geen probleem. De uiteindelijke parameters zijn:
 
 \begin{align*}
 W_N = L_P &= \SI{2}{\micro m} \\
@@ -81,12 +81,12 @@ Figuur \ref{fig:wave_optimaal} toont de waveform van de 5-bit schakeling met dez
 	\label{fig:wave_optimaal}
 \end{figure}
 
-Als we de kloksignalen laten overlappen, huppelt het ingangssignaal te snel door de schakeling. Wanneer zowel $CLK_1$ als $CLK_2$ hoog is, kan het ingangssignaal van een schuifregister namelijk rechtstreeks doorstromen naar de uitgang. Figuur \ref{fig:wave_overlap} toont de waveform bij een duty cycle van $0,62$.
+Als we de kloksignalen laten overlappen, propageert het ingangssignaal te snel doorheen de schakeling. Wanneer zowel $CLK_1$ als $CLK_2$ hoog is, kan het ingangssignaal van een schuifregister namelijk rechtstreeks doorstromen naar de uitgang. Figuur \ref{fig:wave_overlap} toont de waveform bij een duty cycle van $0,62$.
 
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=0.7\textwidth]{wave_overlap.png}
-	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen. net22 is de uitgangsspanning van het eerste schuifregister.}
+	\caption{De werking van het 5-bit schuifregister bij overlappende kloksignalen. Net22 is de uitgangsspanning van het eerste schuifregister.}
 	\label{fig:wave_overlap}
 \end{figure}
 
@@ -106,7 +106,7 @@ W_P = L_N &= \SI{3,6}{\micro m}
 Bij het ontwerp van het elementaire deel van het schuifregister stuitten we op enkele problemen:
 
 \begin{itemize}
-\item We zijn er onterecht vanuit gegaan dat voor de metal2-laag dezelfde design regels zouden gelden als voor de metal1-layer. Dit bleek niet het geval: de minimale grootte en afstand zijn groter.
+\item We zijn er onterecht vanuit gegaan dat voor de metal2-laag dezelfde design regels zouden gelden als voor de metal1-laag. Dit bleek niet het geval: de minimale grootte en afstand zijn groter.
 \item De labels waren getekend in andere lagen dan de tekst-laag.
 \item Er stonden een aantal via's te dicht bij poly.
 \item Alle paa- en naa-gebieden grensden aan elkaar, ook als ze een verschillende potentiaal hadden.
@@ -157,7 +157,7 @@ Figuur \ref{fig:layout} toont het ontwerp van een bonding pad en het volledig af
 		\label{fig:10bit}
 	\end{subfigure}
 	
-	\caption{De layout van (\subref{fig:bonding_pad}) de bonding pad en (\subref{fig:10bit}) het volledige 10-bit register.}
+	\caption{De layout van (\subref{fig:bonding_pad}) het bonding pad en (\subref{fig:10bit}) het volledige 10-bit register.}
 	\label{fig:layout}
 \end{figure}
 
